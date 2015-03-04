@@ -13,6 +13,35 @@
 (defvar *path* "mail/new")
 (defvar *user* "jrm")
 
+
+(defun call-with-command-stream (fun command &rest arguments)
+  "Run shell-comand COMMAND with ARGUMENTS as arguments. While the
+command is running, call FUN with one argument, the stream
+representing the ongoing output of the command. If the command exits
+with nonzero status, signals an error. Like WITH-RUN-OUTPUT, but does
+not collect all output in advance."
+  (let ((process (stumpwm:run-program "~/local/bin/ml_mail.sh"
+				     nil
+				     :search t
+				     :output :stream
+				     :error *error-output*
+				     :wait nil)))
+    (let ((stream (sb-ext:process-output process)))
+      (unwind-protect
+	   (multiple-value-prog1
+	       (funcall fun stream)
+	     (sb-ext:process-wait process)
+	     (let ((status (sb-ext:process-exit-code process)))
+	       (unless (zerop status)
+		 (error "Non-zero exit from ~S~{ ~S~}: ~D"
+			command arguments
+			status))))
+	(when (open-stream-p stream)
+	  (ignore-errors (close stream :abort t)))))))
+
+
+
+
 (defun check-new-messages ()
   (sb-thread:make-thread
     (lambda ()
@@ -57,3 +86,11 @@
 
 ;; Install formatter
 (stumpwm::add-screen-mode-line-formatter #\m #'fmt-maildir-modeline)
+
+(stumpwm::run-program "~/local/bin/ml_mail.sh"
+				     nil
+				     :search t
+				     :output :stream
+				     :error *error-output*
+				     :wait nil)
+
