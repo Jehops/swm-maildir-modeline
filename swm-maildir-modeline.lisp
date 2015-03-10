@@ -24,6 +24,10 @@
     (setf *new-mail-count* (read-line *mail-stream* nil "")))
   (when (string= *new-mail-count* "0")
     (setf *new-mail-count* ""))
+  (when (cl-ppcre::scan "^[^0-9]+" *new-mail-count*)
+    (when (listen *mail-stream*)
+      (read-line *mail-stream* nil ""))
+    (setf *new-mail-count* "*!*"))
   (format nil "~a" *new-mail-count*))
 
 ;; Install formatter
