@@ -1,14 +1,18 @@
 #!/bin/sh
 
 ## customize these variables
-host=gly
-path=mail/new
+host=gly ## use . for local host
+path=~/mail/new
 port=44422
 ssh=/usr/bin/ssh
 user=jrm
 
 interval=30
-nmc="${ssh} -p ${port} -x -o ConnectTimeout=1 ${user}@gly 'ls ${path} | wc -l'"
+if [ ${host} = '.' ]; then
+    nmc="ls ${path} | wc -l"
+else
+    nmc="${ssh} -p ${port} -x -o ConnectTimeout=1 ${user}@gly 'ls ${path} | wc -l'"
+fi
 stump_pid=`pgrep -a -n stumpwm`
 
 # while stumpwm is still running
