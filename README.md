@@ -1,8 +1,9 @@
 # `swm-freebsd-zfs-modeline`
 
 Put %m in your StumpWM mode-line format string (*screen-mode-line-format*) to
-show the number of new messages in a mailder folder.  You need ssh access to the
-remote host with key-based authentication setup.
+show the number of new messages in a mailder folder.  If the maildir folder is
+remote, you will need ssh access to the remote host with key-based
+authentication set up.
 
 In addition to the lisp code, there is a small Bourne shell script, ml_mail.sh.
 Make sure this script is executable by the user running StumpWM and within the
@@ -32,8 +33,3 @@ module?
 
 A: Yes, it could.  I tried doing that with and without threads.  I found StumpWM
 became less responsive in both cases.  Don't you prefer a snappy StumpWM?
-
-Q: Will this only run on FreeBSD?
-
-A: By default, yes, but it should be quite simple to modify ml_mail.sh to get it
-working on your OS.
