@@ -3,10 +3,15 @@
 ## customize these
 ## use host=. for local host
 host=my_host
+ap="/usr/local/bin/mpg123"
+nms="${HOME}/files/media/audio/chime.mp3"
+count=0
+host=.
+newcount=0
 path=~/mail/new
 port=22
 user=me
-interval=30
+interval=10
 
 stump_pid=$(pgrep -a -n stumpwm)
 
