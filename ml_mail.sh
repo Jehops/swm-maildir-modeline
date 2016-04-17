@@ -17,10 +17,10 @@ stump_pid="$(pgrep -a -n stumpwm)"
 ## while stumpwm is still running
 while kill -0 "$stump_pid" > /dev/null 2>&1; do
     if [ "$host" = '.' ]; then
-	newcount="$(ls ${path} | wc -l | tr -d '[[:space:]]')"
+	newcount="$(ls ${path} | wc -l | tr -d '[:space:]')"
     else
 	newcount=$(/usr/bin/ssh -p "$port" -x -o ConnectTimeout=1
-		   "$user"@"$host" "ls $path | wc -l | tr -d '[[:space:]]'")
+		   "$user"@"$host" "ls $path | wc -l | tr -d '[:space:]'")
     fi
     [ "$newcount" -gt "$count" ] && "$ap" "$nms" > /dev/null 2>&1
     count="$newcount"
