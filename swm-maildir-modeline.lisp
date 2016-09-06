@@ -1,6 +1,6 @@
 ;; swm-maildir-modline.lisp
 ;;
-;; Put %m in your modeline format string to show number of new mails
+;; Put %m in your modeline format string to show number of new mail messages
 ;;
 
 (in-package #:swm-maildir-modeline)
